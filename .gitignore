@@ -22,3 +22,60 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+
+# IntelliJ IDEA
+*.iml
+.idea/
+*.iws
+*.ipr
+out/
+
+# Eclipse
+*.classpath
+*.project
+*.settings/
+bin/
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Spring Boot
+spring.log
+application-*.yml
+!application.yml
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# H2 database files
+*.h2.db
+*.mv.db
+
+# Build output
+build/
+!build.gradle
+
+# Test coverage
+coverage/
+*.exec
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# Application specific
+logs/
+temp/
