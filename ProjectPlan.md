@@ -10,7 +10,6 @@ This document outlines the step-by-step plan to implement the Store Management A
 
 - ✅ Define business use cases and main user roles (ADMIN, USER)
 - ✅ List required API endpoints in `README.md` (GET, POST, PUT /products)
-- [ ] Document example request/response payloads
 - ✅ Specify role-based access for each endpoint
 - ✅ Create `ProjectPlan.md` with clear development steps
 
@@ -18,14 +17,11 @@ This document outlines the step-by-step plan to implement the Store Management A
 
 ### ✅ Step 2: Scaffold the Spring Boot Project
 
-- [ ] Generate Spring Boot + Maven project with:
-  - Spring Web
-  - Spring Data JPA
-  - Spring Security
-  - H2 Database
+- ✅ Generate Spring Boot + Maven project with:
+  - Spring Web 
   - Lombok
-- [ ] Set Java version to 17
-- [ ] Create base package structure:
+- ✅ Set Java version to 17
+- ✅ Create base package structure:
 store-api-springboot/
 ├── controller/         # REST endpoints (ProductController)
 ├── service/            # Business logic (ProductService)
@@ -37,10 +33,11 @@ store-api-springboot/
 │   └── application.yml # DB config, H2 console
 ├── test/               # Unit test for ProductService
 └── StoreApiApplication.java
+- [ ] Document example request/response payloads
 
 ---
 
-### ✅ Step 3:  Domain Model and Persistence
+### ✅ Step 3:  Domain Model and Persistence - use Spring Data JPA & H2 Database
 
 - [ ] Define `Product` entity (`id`, `name`, `price`, `version`, `createdAt`, `updatedAt`)
 - [ ] Use JPA annotations (`@Entity`, `@Id`, `@GeneratedValue`)
@@ -76,7 +73,7 @@ store-api-springboot/
 
 ---
 
-### ✅ Step 6: Security Configuration
+### ✅ Step 6: Security Configuration - use Spring Security
 
 - [ ] Create `SecurityConfig` class
 - [ ] Define in-memory users and roles:
