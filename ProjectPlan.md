@@ -33,11 +33,11 @@ store-api-springboot/
 │   └── application.yml # DB config, H2 console
 ├── test/               # Unit test for ProductService
 └── StoreApiApplication.java
-- [ ] Document example request/response payloads
+- ✅ Document example request/response payloads
 
 ---
 
-### ✅ Step 3:  Domain Model and Persistence - use Spring Data JPA & H2 Database
+### ⬜ Step 3:  Domain Model and Persistence - use Spring Data JPA & H2 Database
 
 - [ ] Define `Product` entity (`id`, `name`, `price`, `version`, `createdAt`, `updatedAt`)
 - [ ] Use JPA annotations (`@Entity`, `@Id`, `@GeneratedValue`)
@@ -48,7 +48,7 @@ store-api-springboot/
 
 ---
 
-### ✅ Step 4: API Interface (Stub Only)
+### ⬜ Step 4: API Interface (Stub Only)
 
 - [ ] Create `ProductController`
 - [ ] Define method stubs for:
@@ -61,7 +61,7 @@ store-api-springboot/
 
 ---
 
-### ✅ Step 5: Service Layer Implementation
+### ⬜ Step 5: Service Layer Implementation
 
 - [ ] Create `ProductService` and implement methods:
 - `addProduct(Product product)`
@@ -73,7 +73,7 @@ store-api-springboot/
 
 ---
 
-### ✅ Step 6: Security Configuration - use Spring Security
+### ⬜ Step 6: Security Configuration - use Spring Security
 
 - [ ] Create `SecurityConfig` class
 - [ ] Define in-memory users and roles:
@@ -85,7 +85,7 @@ store-api-springboot/
 
 ---
 
-### ✅ Step 7: Logging & Observability
+### ⬜ Step 7: Logging & Observability
 
 - [ ] Use SLF4J with Logback (default in Spring Boot)
 - [ ] Add loggers in all key classes 
@@ -102,7 +102,7 @@ store-api-springboot/
 	  
 ---
 
-### ✅ Step 8: Error Handling
+### ⬜ Step 8: Error Handling
 
 - [ ] Create custom exception `ProductNotFoundException`
 - [ ] Create `GlobalExceptionHandler` using `@ControllerAdvice`
@@ -121,7 +121,7 @@ store-api-springboot/
 
 ---
 
-### ✅ Step 9: Testing
+### ⬜ Step 9: Testing
 
 - [ ] Add unit test for `ProductService`
 - Test happy path and error scenarios
@@ -130,7 +130,7 @@ store-api-springboot/
 
 ---
 
-### ✅ Step 10: Infrastructure & Configuration
+### ⬜ Step 10: Infrastructure & Configuration
 
 - [ ] Enable H2 console (`/h2-console`) in `application.yml`
 - [ ] Configure datasource: `jdbc:h2:mem:storedb`
@@ -138,7 +138,7 @@ store-api-springboot/
 
 ---
 
-### ✅ Step 11: Logging & Observability
+### ⬜ Step 11: Logging & Observability
 
 - [ ] Use SLF4J with Logback (Spring Boot default). Include context data (request, product id, username)
 - [ ] Log INFO-level messages for key actions (create, update, read)
@@ -149,7 +149,7 @@ store-api-springboot/
 
 ---
 
-### ✅ Step 12: Optional Stretch Goals
+### ⬜ Step 12: Optional Stretch Goals
 
 - [ ] Add pagination to `GET /products`
 - [ ] Add input validation (`@Valid`, DTOs)
@@ -157,7 +157,7 @@ store-api-springboot/
 
 ---
 
-### ✅ Step 13: Finalization & Delivery
+### ⬜ Step 13: Finalization & Delivery
 
 - [ ] Finalize `README.md` with final features and instructions:
 - Usage instructions
