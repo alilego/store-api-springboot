@@ -22,17 +22,21 @@ This document outlines the step-by-step plan to implement the Store Management A
   - Lombok
 - ✅ Set Java version to 17
 - ✅ Create base package structure:
+```
 store-api-springboot/
 ├── controller/         # REST endpoints (ProductController)
 ├── service/            # Business logic (ProductService)
 ├── model/              # JPA entity (Product)
+├── dto/                # Data Transfer Objects
 ├── repository/         # Spring Data JPA repository
 ├── config/             # Security configuration
 ├── exception/          # Global exception handlers
+├── docs/               # API documentation
 ├── resources/
 │   └── application.yml # DB config, H2 console
 ├── test/               # Unit test for ProductService
 └── StoreApiApplication.java
+```
 - ✅ Document example request/response payloads
 
 ---
@@ -50,26 +54,26 @@ store-api-springboot/
 
 ---
 
-### ⬜ Step 4:  Domain Model and Persistence - use Spring Data JPA & H2 Database
+### ✅ Step 4:  Domain Model and Persistence - use Spring Data JPA & H2 Database
 
-- [ ] Define `Product` entity (`id`, `name`, `price`, `version`, `createdAt`, `updatedAt`)
-- [ ] Use JPA annotations (`@Entity`, `@Id`, `@GeneratedValue`)
-- [ ] Enable JPA auditing via `@EnableJpaAuditing`
-- [ ] Use `@CreatedDate` and `@LastModifiedDate` with Spring Data auditing
-- [ ] Create `ProductRepository` extending `JpaRepository`
-- [ ] Add optimistic locking to `Product` using `@Version`
+- ✅ Define `Product` entity (`id`, `name`, `price`, `version`, `createdAt`, `updatedAt`)
+- ✅ Use JPA annotations (`@Entity`, `@Id`, `@GeneratedValue`)
+- ✅ Enable JPA auditing via `@EnableJpaAuditing`
+- ✅ Use `@CreatedDate` and `@LastModifiedDate` with Spring Data auditing
+- ✅ Create `ProductRepository` extending `JpaRepository`
+- ✅ Add optimistic locking to `Product` using `@Version`
 
 ---
 
-### ⬜ Step 5: Service Layer Implementation
+### ✅ Step 5: Service Layer Implementation
 
-- [ ] Create `ProductService` and implement methods:
+- ✅ Create `ProductService` and implement methods:
 - `addProduct(Product product)`
 - `getProductById(Long id)`
 - `updatePrice(Long id, BigDecimal price)`
 - `getAllProducts()`
-- [ ] Connect with `ProductRepository`
-- [ ] Throw `ProductNotFoundException` where appropriate
+- ✅ Connect with `ProductRepository`
+- ✅ Throw `ProductNotFoundException` where appropriate
 
 ---
 
