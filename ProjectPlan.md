@@ -37,7 +37,20 @@ store-api-springboot/
 
 ---
 
-### ⬜ Step 3:  Domain Model and Persistence - use Spring Data JPA & H2 Database
+### ✅ Step 3: API Interface (Stub Only)
+
+- ✅ Create `ProductController`
+- ✅ Define method stubs for:
+- `POST /products`
+- `GET /products/{id}`
+- `PUT /products/{id}`
+- `GET /products` (list all)
+- ✅ Return hardcoded or placeholder responses
+- [ ] Add basic logging in controller methods
+
+---
+
+### ⬜ Step 4:  Domain Model and Persistence - use Spring Data JPA & H2 Database
 
 - [ ] Define `Product` entity (`id`, `name`, `price`, `version`, `createdAt`, `updatedAt`)
 - [ ] Use JPA annotations (`@Entity`, `@Id`, `@GeneratedValue`)
@@ -45,19 +58,6 @@ store-api-springboot/
 - [ ] Use `@CreatedDate` and `@LastModifiedDate` with Spring Data auditing
 - [ ] Create `ProductRepository` extending `JpaRepository`
 - [ ] Add optimistic locking to `Product` using `@Version`
-
----
-
-### ⬜ Step 4: API Interface (Stub Only)
-
-- [ ] Create `ProductController`
-- [ ] Define method stubs for:
-- `POST /products`
-- `GET /products/{id}`
-- `PUT /products/{id}`
-- `GET /products` (list all)
-- [ ] Return hardcoded or placeholder responses
-- [ ] Add basic logging in controller methods
 
 ---
 

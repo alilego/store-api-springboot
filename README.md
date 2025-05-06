@@ -21,6 +21,43 @@ Design and implement a minimal but realistic store management backend with role-
 
 ---
 
+## 📡 API Examples
+
+### Create a Product (ADMIN only)
+```bash
+curl -X POST http://localhost:8080/api/products \
+  -H "Content-Type: application/json" \
+  -u admin:adminpass \
+  -d '{
+    "name": "Premium Widget",
+    "price": 99.99
+  }'
+```
+
+### List All Products (USER/ADMIN)
+```bash
+curl -X GET http://localhost:8080/api/products \
+  -u user:userpass
+```
+
+### Get Product by ID (USER/ADMIN)
+```bash
+curl -X GET http://localhost:8080/api/products/1 \
+  -u user:userpass
+```
+
+### Update Product Price (ADMIN only)
+```bash
+curl -X PUT http://localhost:8080/api/products/1 \
+  -H "Content-Type: application/json" \
+  -u admin:adminpass \
+  -d '{
+    "price": 89.99
+  }'
+```
+
+---
+
 ## 🔐 Security
 
 ### Authentication & Roles
@@ -80,12 +117,12 @@ Target: clear separation of concerns & maintainability. It is intentionally simp
 ## ▶️ How to Run
 
 ```bash
-mvn spring-boot:run```
-
+mvn spring-boot:run
+```
 
 ## 🧪 How to Test
 
 ```bash
-mvn test```
-
+mvn test
+```
 
