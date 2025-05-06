@@ -46,7 +46,7 @@ store-api-springboot/
 - `PUT /products/{id}`
 - `GET /products` (list all)
 - ✅ Return hardcoded or placeholder responses
-- [ ] Add basic logging in controller methods
+- ✅ Add basic logging in controller methods
 
 ---
 

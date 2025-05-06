@@ -6,6 +6,9 @@ import com.store.model.Product;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Arrays;
@@ -16,8 +19,13 @@ import java.util.List;
 @RequestMapping("/api/products")
 public class ProductController {
 
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
+
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody CreateProductRequest request) {              
+    public ResponseEntity<Product> createProduct(@RequestBody CreateProductRequest request) {
+        logger.info("POST /api/products - Creating product: name={}, price={}", request.name(), request.price());
+
+
         // Placeholder response
         Product product = new Product(
             1L,
@@ -33,6 +41,8 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable Long id) {
+        logger.info("GET /api/products/{} - Fetching product", id);
+
         // Placeholder response
         Product product = new Product(
             id,
@@ -50,6 +60,8 @@ public class ProductController {
     public ResponseEntity<Product> updateProductPrice(
             @PathVariable Long id,
             @RequestBody UpdateProductPriceRequest request) {
+        logger.info("PUT /api/products/{} - Updating price to {}", id, request.price());
+
         // Placeholder response
         Product product = new Product(
             id,
@@ -65,6 +77,8 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
+        logger.info("GET /api/products - Fetching all products");
+
         // Placeholder response
         List<Product> products = Arrays.asList(
             new Product(
