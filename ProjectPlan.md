@@ -77,13 +77,13 @@ store-api-springboot/
 
 ---
 
-### ⬜ Step 6: Security Configuration - use Spring Security
+### ✅ Step 6: Security Configuration - use Spring Security
 
-- [ ] Create `SecurityConfig` class
-- [ ] Define in-memory users and roles:
+- ✅ Create `SecurityConfig` class
+- ✅ Define in-memory users and roles:
 - `admin / adminpass` → ROLE_ADMIN
 - `user / userpass` → ROLE_USER
-- [ ] Protect endpoints using `@PreAuthorize` or URL-based rules:
+- ✅ Protect endpoints using URL-based rules:
 - `GET /products/**` → USER, ADMIN
 - `POST` and `PUT` → ADMIN only
 
