@@ -89,7 +89,7 @@ store-api-springboot/
 
 ---
 
-### ⬜ Step 7: Logging & Observability
+### ✅ Step 7: Logging & Observability
 
 - ✅ Use SLF4J with Logback (default in Spring Boot)
 - ✅ Add loggers in all key classes 
@@ -98,13 +98,9 @@ store-api-springboot/
   - `WARN` or `ERROR` for exceptions and unexpected conditions
   - `DEBUG` for SQL queries 
 - ✅ Avoid logging sensitive data (credentials, tokens, user IDs)
-- [ ] (Optional) Add request ID traceability using MDC (`Mapped Diagnostic Context`)
-- [ ] (Optional) Customize log format to include trace IDs:
-  ```yaml
-  logging:
-    pattern:
-      console: "%d{yyyy-MM-dd HH:mm:ss} [%X{requestId}] %-5level %logger{36} - %msg%n"```
-	  
+- ✅ Add request ID traceability using MDC (`Mapped Diagnostic Context`)
+- ✅ Customize log format to include: datetime, log level, API request id, thread, message
+  
 ---
 
 ### ⬜ Step 8: Error Handling
