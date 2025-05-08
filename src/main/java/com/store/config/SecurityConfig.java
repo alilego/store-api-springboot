@@ -26,11 +26,17 @@ public class SecurityConfig {
         logger.info("Configuring security filter chain");
         http
             .csrf().disable()
+            // .csrf(csrf -> csrf
+            //     .ignoringRequestMatchers("/h2-console/**")
+            // )
+            .headers(headers -> headers
+                .frameOptions(frame -> frame.sameOrigin())
+            )
             .authorizeHttpRequests(authorize -> authorize
+                .requestMatchers("/h2-console/**").permitAll() // Allow all to H2 console
                 
                 .requestMatchers(HttpMethod.POST, "/api/products").hasRole("ADMIN")    // Create product
                 .requestMatchers(HttpMethod.PUT, "/api/products/*").hasRole("ADMIN")   // Update product
-                
                 .requestMatchers(HttpMethod.GET, "/api/products").hasAnyRole("USER", "ADMIN")     // List all products
                 .requestMatchers(HttpMethod.GET, "/api/products/*").hasAnyRole("USER", "ADMIN")   // Get product by ID
                 .anyRequest().authenticated()

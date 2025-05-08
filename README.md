@@ -76,7 +76,11 @@ curl -X PUT http://localhost:8080/api/products/1 \
 ## 🛢️ Persistence
 - Uses **H2**, an in-memory embedded database  
 - Managed via **Spring Data JPA**  
-- Accessible through: [http://localhost:8080/h2-console]
+- Accessible through: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
+- Use:
+  - JDBC URL `jdbc:h2:mem:storedb`
+  - username: `sa`
+  - password: `pass`
 
 ---
 

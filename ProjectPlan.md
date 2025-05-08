@@ -131,11 +131,11 @@ store-api-springboot/
 
 ---
 
-### ⬜ Step 10: Infrastructure & Configuration
+### ✅ Step 10: Infrastructure & Configuration
 
-- [ ] Enable H2 console (`/h2-console`) in `application.yml`
-- [ ] Configure datasource: `jdbc:h2:mem:storedb`
-- [ ] Optionally enable SQL logging for debugging
+- ✅ Enable H2 console (`/h2-console`) in `application.yml`
+- ✅ Configure datasource: `jdbc:h2:mem:storedb`
+
 
 ---
 
