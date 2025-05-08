@@ -91,12 +91,13 @@ store-api-springboot/
 
 ### ⬜ Step 7: Logging & Observability
 
-- [ ] Use SLF4J with Logback (default in Spring Boot)
-- [ ] Add loggers in all key classes 
-- [ ] Log at appropriate levels:
-  - `INFO` for business actions (e.g., "Product added", "Price updated")
+- ✅ Use SLF4J with Logback (default in Spring Boot)
+- ✅ Add loggers in all key classes 
+- ✅ Log at appropriate levels:
+  - `INFO` for business actions (e.g., "Product added", "Price updated") & security events
   - `WARN` or `ERROR` for exceptions and unexpected conditions
-- [ ] Avoid logging sensitive data (credentials, tokens, user IDs)
+  - `DEBUG` for SQL queries 
+- ✅ Avoid logging sensitive data (credentials, tokens, user IDs)
 - [ ] (Optional) Add request ID traceability using MDC (`Mapped Diagnostic Context`)
 - [ ] (Optional) Customize log format to include trace IDs:
   ```yaml

@@ -1,5 +1,7 @@
 package com.store.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -17,8 +19,11 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        logger.info("Configuring security filter chain");
         http
             .csrf().disable()
             .authorizeHttpRequests(authorize -> authorize
@@ -37,6 +42,7 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
+        logger.info("Initializing in-memory user details service");
         UserDetails admin = User.builder()
             .username("admin")
             .password(passwordEncoder().encode("adminpass"))
@@ -54,6 +60,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+        logger.debug("Creating BCrypt password encoder");
         return new BCryptPasswordEncoder();
     }
 } 

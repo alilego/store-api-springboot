@@ -13,8 +13,18 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false                                     #disable Hibernate logs (keep only logger)
   h2:
     console:
       enabled: true
-      path: /h2-console 
+      path: /h2-console
+
+logging:
+  level:
+    root: INFO
+    com.store: DEBUG
+    org.springframework.security: INFO
+    org.hibernate.SQL: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n" 

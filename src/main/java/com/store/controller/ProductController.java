@@ -30,8 +30,11 @@ public class ProductController {
         
         Product product = new Product(request.name(), request.price());
         Product savedProduct = productService.addProduct(product);
+        ProductResponse response = ProductResponse.from(savedProduct);
         
-        return ResponseEntity.status(201).body(ProductResponse.from(savedProduct));
+        logger.info("POST /api/products - Product created successfully: id={}, name={}, price={}", 
+            response.id(), response.name(), response.price());
+        return ResponseEntity.status(201).body(response);
     }
 
     @GetMapping("/{id}")
@@ -39,7 +42,11 @@ public class ProductController {
         logger.info("GET /api/products/{} - Fetching product", id);
         
         Product product = productService.getProductById(id);
-        return ResponseEntity.ok(ProductResponse.from(product));
+        ProductResponse response = ProductResponse.from(product);
+        
+        logger.info("GET /api/products/{} - Product found: name={}, price={}", 
+            id, response.name(), response.price());
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")
@@ -49,7 +56,11 @@ public class ProductController {
         logger.info("PUT /api/products/{} - Updating price to {}", id, request.price());
         
         Product updatedProduct = productService.updatePrice(id, request.price());
-        return ResponseEntity.ok(ProductResponse.from(updatedProduct));
+        ProductResponse response = ProductResponse.from(updatedProduct);
+        
+        logger.info("PUT /api/products/{} - Price updated successfully: new price={}", 
+            id, response.price());
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
@@ -61,6 +72,7 @@ public class ProductController {
                 .map(ProductResponse::from)
                 .toList();
         
+        logger.info("GET /api/products - Found {} products", response.size());
         return ResponseEntity.ok(response);
     }
 } 
