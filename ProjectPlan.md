@@ -139,26 +139,15 @@ store-api-springboot/
 
 ---
 
-### ⬜ Step 11: Logging & Observability
-
-- [ ] Use SLF4J with Logback (Spring Boot default). Include context data (request, product id, username)
-- [ ] Log INFO-level messages for key actions (create, update, read)
-- [ ] Log WARN/ERROR for all exceptions and validation errors
-- [ ] Log DEBUG/TRACE for detailed flow and diagnosing the app
-- [ ] Ensure no sensitive data is written to logs
-- [ ] (Optional) Add request ID traceability using MDC
-
----
-
-### ⬜ Step 12: Optional Stretch Goals
+### ⬜ Step 11: Optional Stretch Goals
 
 - [ ] Add pagination to `GET /products`
 - [ ] Add input validation (`@Valid`, DTOs)
-- [ ] Implement optimistic locking
+- ✅ Implement optimistic locking
 
 ---
 
-### ⬜ Step 13: Finalization & Delivery
+### ⬜ Step 12: Finalization & Delivery
 
 - [ ] Finalize `README.md` with final features and instructions:
 - Usage instructions

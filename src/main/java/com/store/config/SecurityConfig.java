@@ -25,10 +25,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         logger.info("Configuring security filter chain");
         http
-            .csrf().disable()
-            // .csrf(csrf -> csrf
-            //     .ignoringRequestMatchers("/h2-console/**")
-            // )
+            .csrf().disable()            
             .headers(headers -> headers
                 .frameOptions(frame -> frame.sameOrigin())
             )
