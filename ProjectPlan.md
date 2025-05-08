@@ -105,9 +105,9 @@ store-api-springboot/
 
 ### ⬜ Step 8: Error Handling
 
-- [ ] Create custom exception `ProductNotFoundException`
-- [ ] Create `GlobalExceptionHandler` using `@ControllerAdvice`
-- [ ] Return standardized error response structure:
+- ✅ Create custom exception `ProductNotFoundException`
+- ✅ Create `GlobalExceptionHandler` using `@ControllerAdvice`
+- ✅ Return standardized error response structure:
   - Include: timestamp, status, error, message, path
 - [ ] Return appropriate HTTP status codes (e.g., 400, 403, 404, 409, 500)
 - [ ] Handle key exceptions explicitly:
