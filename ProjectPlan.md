@@ -122,11 +122,11 @@ store-api-springboot/
 
 ---
 
-### ⬜ Step 9: Testing
+### ✅ Step 9: Testing
 
-- ✅ Add unit test for `ProductService`
+- ✅ Add unit tests for `ProductService`
   - Test happy path and error scenarios
-- [ ] Add functional test for `ProductService`
+- ✅ Add functional/integration tests for `ProductService`
 - ✅ Add CI - run tests upon git push
 
 ---
