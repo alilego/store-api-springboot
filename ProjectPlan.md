@@ -125,9 +125,9 @@ store-api-springboot/
 ### ⬜ Step 9: Testing
 
 - [ ] Add unit test for `ProductService`
-- Test happy path and error scenarios
-- [ ] Use JUnit 5
-- [ ] Use in-memory data setup or mocks
+  - Test happy path and error scenarios
+- [ ] Add functional test for `ProductService`
+- [ ] Add CI - run tests upon git push
 
 ---
 
