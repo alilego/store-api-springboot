@@ -1,5 +1,6 @@
 package com.store.service;
 
+import com.store.exception.ProductNotFoundException;
 import com.store.model.Product;
 import com.store.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -53,106 +55,101 @@ class ProductServiceTest {
     }
 
     @Test
+    void addProduct_ShouldThrowException_WhenProductIsNull() {
+        logger.info("\n{}\n>>> TEST: addProduct_ShouldThrowException_WhenProductIsNull <<<\n{}", TEST_SEPARATOR, TEST_SEPARATOR);
+        
+        assertThatThrownBy(() -> productService.addProduct(null))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("Product cannot be null");
+        
+        verify(productRepository, never()).save(any(Product.class));
+    }
+
+    // Business Logic Tests
+    @Test
     void addProduct_ShouldReturnSavedProduct() {
-        // Test: Adding a new product to the store
         logger.info("\n{}\n>>> TEST: addProduct_ShouldReturnSavedProduct <<<\n{}", TEST_SEPARATOR, TEST_SEPARATOR);
         
-        // Arrange - Setup the mock behavior
-        logger.info("Setting up mock repository to return saved product");
         when(productRepository.save(any(Product.class))).thenReturn(testProduct);
-
-        // Act - Call the service method
-        logger.info("Calling productService.addProduct()");
+        
         Product savedProduct = productService.addProduct(testProduct);
-
-        // Assert - Verify the results
-        logger.info("Verifying saved product details");
+        
         assertThat(savedProduct).isNotNull();
         assertThat(savedProduct.getId()).isEqualTo(1L);
         assertThat(savedProduct.getName()).isEqualTo("Test Product");
         assertThat(savedProduct.getPrice()).isEqualTo(new BigDecimal("99.99"));
-        
-        // Verify repository interaction
-        logger.info("Verifying repository interaction");
         verify(productRepository, times(1)).save(any(Product.class));
-        logger.info("Test completed successfully\n{}", TEST_SEPARATOR);
     }
 
     @Test
     void getProductById_ShouldReturnProduct() {
-        // Test: Retrieving a product by its ID
         logger.info("\n{}\n>>> TEST: getProductById_ShouldReturnProduct <<<\n{}", TEST_SEPARATOR, TEST_SEPARATOR);
         
-        // Arrange - Setup the mock behavior
-        logger.info("Setting up mock repository to return product for ID: {}", 1L);
         when(productRepository.findById(1L)).thenReturn(Optional.of(testProduct));
-
-        // Act - Call the service method
-        logger.info("Calling productService.getProductById()");
+        
         Product foundProduct = productService.getProductById(1L);
-
-        // Assert - Verify the results
-        logger.info("Verifying found product details");
+        
         assertThat(foundProduct).isNotNull();
         assertThat(foundProduct.getId()).isEqualTo(1L);
         assertThat(foundProduct.getName()).isEqualTo("Test Product");
-        
-        // Verify repository interaction
-        logger.info("Verifying repository interaction");
         verify(productRepository, times(1)).findById(1L);
-        logger.info("Test completed successfully\n{}", TEST_SEPARATOR);
+    }
+
+    @Test
+    void getProductById_ShouldThrowException_WhenProductNotFound() {
+        logger.info("\n{}\n>>> TEST: getProductById_ShouldThrowException_WhenProductNotFound <<<\n{}", TEST_SEPARATOR, TEST_SEPARATOR);
+        
+        when(productRepository.findById(999L)).thenReturn(Optional.empty());
+        
+        assertThatThrownBy(() -> productService.getProductById(999L))
+                .isInstanceOf(ProductNotFoundException.class)
+                .hasMessageContaining("Product not found with id: 999");
+        
+        verify(productRepository, times(1)).findById(999L);
     }
 
     @Test
     void updatePrice_ShouldReturnUpdatedProduct() {
-        // Test: Updating a product's price
         logger.info("\n{}\n>>> TEST: updatePrice_ShouldReturnUpdatedProduct <<<\n{}", TEST_SEPARATOR, TEST_SEPARATOR);
         
-        // Arrange - Setup the mock behavior
         BigDecimal newPrice = new BigDecimal("149.99");
-        logger.info("Setting up mock repository for price update to: {}", newPrice);
         when(productRepository.findById(1L)).thenReturn(Optional.of(testProduct));
         when(productRepository.save(any(Product.class))).thenReturn(testProduct);
-
-        // Act - Call the service method
-        logger.info("Calling productService.updatePrice()");
+        
         Product updatedProduct = productService.updatePrice(1L, newPrice);
-
-        // Assert - Verify the results
-        logger.info("Verifying updated product details");
+        
         assertThat(updatedProduct).isNotNull();
         assertThat(updatedProduct.getPrice()).isEqualTo(newPrice);
-        
-        // Verify repository interactions
-        logger.info("Verifying repository interactions");
         verify(productRepository, times(1)).findById(1L);
         verify(productRepository, times(1)).save(any(Product.class));
-        logger.info("Test completed successfully\n{}", TEST_SEPARATOR);
+    }
+
+    @Test
+    void updatePrice_ShouldThrowException_WhenProductNotFound() {
+        logger.info("\n{}\n>>> TEST: updatePrice_ShouldThrowException_WhenProductNotFound <<<\n{}", TEST_SEPARATOR, TEST_SEPARATOR);
+        
+        when(productRepository.findById(999L)).thenReturn(Optional.empty());
+        
+        assertThatThrownBy(() -> productService.updatePrice(999L, new BigDecimal("149.99")))
+                .isInstanceOf(ProductNotFoundException.class)
+                .hasMessageContaining("Product not found with id: 999");
+        
+        verify(productRepository, times(1)).findById(999L);
+        verify(productRepository, never()).save(any(Product.class));
     }
 
     @Test
     void getAllProducts_ShouldReturnListOfProducts() {
-        // Test: Retrieving all products from the store
         logger.info("\n{}\n>>> TEST: getAllProducts_ShouldReturnListOfProducts <<<\n{}", TEST_SEPARATOR, TEST_SEPARATOR);
         
-        // Arrange - Setup the mock behavior
         List<Product> productList = Arrays.asList(testProduct);
-        logger.info("Setting up mock repository to return list of products");
         when(productRepository.findAll()).thenReturn(productList);
-
-        // Act - Call the service method
-        logger.info("Calling productService.getAllProducts()");
+        
         List<Product> foundProducts = productService.getAllProducts();
-
-        // Assert - Verify the results
-        logger.info("Verifying returned product list");
+        
         assertThat(foundProducts).isNotNull();
         assertThat(foundProducts).hasSize(1);
         assertThat(foundProducts.get(0).getId()).isEqualTo(1L);
-        
-        // Verify repository interaction
-        logger.info("Verifying repository interaction");
         verify(productRepository, times(1)).findAll();
-        logger.info("Test completed successfully\n{}", TEST_SEPARATOR);
     }
 } 

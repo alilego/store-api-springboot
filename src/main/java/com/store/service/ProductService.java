@@ -23,6 +23,9 @@ public class ProductService {
     }
 
     public Product addProduct(Product product) {
+        if (product == null) {
+            throw new IllegalArgumentException("Product cannot be null");
+        }
         logger.info("Adding new product: name={}, price={}", product.getName(), product.getPrice());
         return productRepository.save(product);
     }

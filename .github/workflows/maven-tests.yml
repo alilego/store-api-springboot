@@ -37,7 +37,7 @@ jobs:
         echo "Listing directory contents:"
         ls -la
         echo "Running Maven with debug output..."
-        mvn -B clean verify --file pom.xml -X
+        mvn -B clean verify --file pom.xml -DargLine="--enable-native-access=ALL-UNNAMED"
         echo "Maven build completed"
     
     - name: Show test results
