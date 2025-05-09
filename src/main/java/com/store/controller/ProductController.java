@@ -7,6 +7,8 @@ import com.store.model.Product;
 import com.store.service.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.annotation.Validated;
+import jakarta.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
+@Validated
 public class ProductController {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
@@ -25,7 +28,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductResponse> createProduct(@RequestBody CreateProductRequest request) {
+    public ResponseEntity<ProductResponse> createProduct(@Valid @RequestBody CreateProductRequest request) {
         logger.info("POST /api/products - Creating product: name={}, price={}", request.name(), request.price());
         
         Product product = new Product(request.name(), request.price());
@@ -52,7 +55,7 @@ public class ProductController {
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponse> updateProductPrice(
             @PathVariable Long id,
-            @RequestBody UpdateProductPriceRequest request) {
+            @Valid @RequestBody UpdateProductPriceRequest request) {
         logger.info("PUT /api/products/{} - Updating price to {}", id, request.price());
         
         Product updatedProduct = productService.updatePrice(id, request.price());

@@ -142,8 +142,7 @@ store-api-springboot/
 ### ⬜ Step 11: Optional Stretch Goals
 
 - [ ] Add pagination to `GET /products`
-- [ ] Add input validation (`@Valid`, DTOs)
-- ✅ Implement optimistic locking
+- ✅ Add input validation (`@Valid`, DTOs)
 
 ---
 
