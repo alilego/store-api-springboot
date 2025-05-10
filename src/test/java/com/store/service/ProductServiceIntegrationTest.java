@@ -1,6 +1,7 @@
 package com.store.service;
 
 import com.store.exception.ProductNotFoundException;
+import com.store.exception.ProductVersionMismatchException;
 import com.store.model.Product;
 import com.store.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -78,7 +79,7 @@ class ProductServiceIntegrationTest {
         BigDecimal newPrice = new BigDecimal("449.99");
 
         // Act
-        Product updatedProduct = productService.updatePrice(savedProduct.getId(), newPrice);
+        Product updatedProduct = productService.updatePrice(savedProduct.getId(), newPrice, null);
 
         // Assert
         assertThat(updatedProduct.getPrice()).isEqualByComparingTo(newPrice);
@@ -86,6 +87,32 @@ class ProductServiceIntegrationTest {
         // Verify the price is actually updated in the database
         Product retrievedProduct = productService.getProductById(savedProduct.getId());
         assertThat(retrievedProduct.getPrice()).isEqualByComparingTo(newPrice);
+    }
+
+    @Test
+    void updatePrice_ShouldThrowException_WhenVersionMismatch() {
+        // Arrange
+        Product newProduct = new Product("Version Test", new BigDecimal("499.99"));
+        Product savedProduct = productService.addProduct(newProduct);
+        
+        // First update to increment version
+        Product savedProduct1 = productService.updatePrice(savedProduct.getId(), new BigDecimal("489.99"), null);
+        Integer firstVersion = savedProduct1.getVersion();
+        productRepository.flush();  // Force transaction commit
+        
+        // Second update to increment version again
+        Product savedProduct2 = productService.updatePrice(savedProduct.getId(), new BigDecimal("479.99"), null);
+        Integer secondVersion = savedProduct2.getVersion();
+        productRepository.flush();  // Force transaction commit
+        
+        // Verify version was incremented
+        assertThat(secondVersion).isGreaterThan(firstVersion);
+        
+        // Now try to update with the old version
+        BigDecimal newPrice = new BigDecimal("549.99");
+        assertThatThrownBy(() -> productService.updatePrice(savedProduct.getId(), newPrice, firstVersion))
+                .isInstanceOf(ProductVersionMismatchException.class)
+                .hasMessageContaining("Your version of product with id=" + savedProduct.getId() + " is outdated");
     }
 
     @Test

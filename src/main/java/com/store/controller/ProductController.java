@@ -56,13 +56,14 @@ public class ProductController {
     public ResponseEntity<ProductResponse> updateProductPrice(
             @PathVariable Long id,
             @Valid @RequestBody UpdateProductPriceRequest request) {
-        logger.info("PUT /api/products/{} - Updating price to {}", id, request.price());
+        logger.info("PUT /api/products/{} - Updating price to {}, version: {}", 
+            id, request.price(), request.version());
         
-        Product updatedProduct = productService.updatePrice(id, request.price());
+        Product updatedProduct = productService.updatePrice(id, request.price(), request.version());
         ProductResponse response = ProductResponse.from(updatedProduct);
         
-        logger.info("PUT /api/products/{} - Price updated successfully: new price={}", 
-            id, response.price());
+        logger.info("PUT /api/products/{} - Price updated successfully: new price={}, new version={}", 
+            id, response.price(), response.version());
         return ResponseEntity.ok(response);
     }
 

@@ -1,6 +1,7 @@
 package com.store.service;
 
 import com.store.exception.ProductNotFoundException;
+import com.store.exception.ProductVersionMismatchException;
 import com.store.model.Product;
 import com.store.repository.ProductRepository;
 import org.slf4j.Logger;
@@ -37,9 +38,16 @@ public class ProductService {
                 .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + id));
     }
 
-    public Product updatePrice(Long id, BigDecimal newPrice) {
-        logger.info("Updating price for product id: {} to: {}", id, newPrice);
+    public Product updatePrice(Long id, BigDecimal newPrice, Integer expectedVersion) {
+        logger.info("Updating price for product id: {} to: {}, expected version: {}", id, newPrice, expectedVersion);
         Product product = getProductById(id);
+        
+        if (expectedVersion != null && !expectedVersion.equals(product.getVersion())) {
+            throw new ProductVersionMismatchException(
+                String.format("Your version of product with id=%d is outdated. Your version: %d. Current version: %d", 
+                    id, expectedVersion, product.getVersion()));
+        }
+        
         product.setPrice(newPrice);
         return productRepository.save(product);
     }

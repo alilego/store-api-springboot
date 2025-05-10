@@ -52,9 +52,12 @@ curl -X PUT http://localhost:8080/api/products/1 \
   -H "Content-Type: application/json" \
   -u admin:adminpass \
   -d '{
-    "price": 89.99
+    "price": 89.99,
+    "version": 1
   }'
 ```
+
+Note: The `version` field is optional. If provided, the update will only succeed if it matches the current version in the database. If omitted, the update will proceed regardless of the current version.
 
 ---
 

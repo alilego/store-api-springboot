@@ -67,6 +67,10 @@ public class Product {
         return version;
     }
 
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
     public Instant getCreatedAt() {
         return createdAt;
     }

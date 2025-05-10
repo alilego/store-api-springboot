@@ -118,6 +118,21 @@ public class GlobalExceptionHandler {
                 ));
     }
 
+    @ExceptionHandler(ProductVersionMismatchException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<ErrorResponse> handleProductVersionMismatchException(
+            ProductVersionMismatchException ex, HttpServletRequest request) {
+        logger.error("Product version mismatch: {}", ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(ErrorResponse.of(
+                        HttpStatus.CONFLICT.value(),
+                        "Conflict",
+                        ex.getMessage(),
+                        request.getRequestURI()
+                ));
+    }
+
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseEntity<ErrorResponse> handleAccessDeniedException(

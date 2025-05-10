@@ -1,6 +1,7 @@
 package com.store.service;
 
 import com.store.exception.ProductNotFoundException;
+import com.store.exception.ProductVersionMismatchException;
 import com.store.model.Product;
 import com.store.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -116,7 +117,7 @@ class ProductServiceTest {
         when(productRepository.findById(1L)).thenReturn(Optional.of(testProduct));
         when(productRepository.save(any(Product.class))).thenReturn(testProduct);
         
-        Product updatedProduct = productService.updatePrice(1L, newPrice);
+        Product updatedProduct = productService.updatePrice(1L, newPrice, null);
         
         assertThat(updatedProduct).isNotNull();
         assertThat(updatedProduct.getPrice()).isEqualTo(newPrice);
@@ -130,11 +131,26 @@ class ProductServiceTest {
         
         when(productRepository.findById(999L)).thenReturn(Optional.empty());
         
-        assertThatThrownBy(() -> productService.updatePrice(999L, new BigDecimal("149.99")))
+        assertThatThrownBy(() -> productService.updatePrice(999L, new BigDecimal("149.99"), null))
                 .isInstanceOf(ProductNotFoundException.class)
                 .hasMessageContaining("Product not found with id: 999");
         
         verify(productRepository, times(1)).findById(999L);
+        verify(productRepository, never()).save(any(Product.class));
+    }
+
+    @Test
+    void updatePrice_ShouldThrowException_WhenVersionMismatch() {
+        logger.info("\n{}\n>>> TEST: updatePrice_ShouldThrowException_WhenVersionMismatch <<<\n{}", TEST_SEPARATOR, TEST_SEPARATOR);
+        
+        testProduct.setVersion(2); // Set current version to 2
+        when(productRepository.findById(1L)).thenReturn(Optional.of(testProduct));
+        
+        assertThatThrownBy(() -> productService.updatePrice(1L, new BigDecimal("149.99"), 1))
+                .isInstanceOf(ProductVersionMismatchException.class)
+                .hasMessageContaining("Your version of product with id=1 is outdated");
+        
+        verify(productRepository, times(1)).findById(1L);
         verify(productRepository, never()).save(any(Product.class));
     }
 
