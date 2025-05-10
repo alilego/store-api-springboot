@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -80,7 +81,7 @@ public class GlobalExceptionHandler {
                 .body(ErrorResponse.of(
                         HttpStatus.BAD_REQUEST.value(),
                         "Bad Request",
-                        "Invalid request body: " + ex.getMessage(),
+                        "Invalid request body format",
                         request.getRequestURI()
                 ));
     }
@@ -113,7 +114,7 @@ public class GlobalExceptionHandler {
                 .body(ErrorResponse.of(
                         HttpStatus.NOT_FOUND.value(),
                         "Not Found",
-                        ex.getMessage(),
+                        "Product not found",
                         request.getRequestURI()
                 ));
     }
@@ -122,13 +123,13 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseEntity<ErrorResponse> handleProductVersionMismatchException(
             ProductVersionMismatchException ex, HttpServletRequest request) {
-        logger.error("Product version mismatch: {}", ex.getMessage());
+        logger.warn("Product version mismatch: {}", ex.getMessage());
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
                 .body(ErrorResponse.of(
                         HttpStatus.CONFLICT.value(),
                         "Conflict",
-                        ex.getMessage(),
+                        "The resource has been modified by another user. Please refresh and try again.",
                         request.getRequestURI()
                 ));
     }
@@ -144,6 +145,21 @@ public class GlobalExceptionHandler {
                         HttpStatus.FORBIDDEN.value(),
                         "Forbidden",
                         "Access denied",
+                        request.getRequestURI()
+                ));
+    }
+
+    @ExceptionHandler(ObjectOptimisticLockingFailureException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<ErrorResponse> handleOptimisticLockingFailureException(
+            ObjectOptimisticLockingFailureException ex, HttpServletRequest request) {
+        logger.error("Optimistic locking failure: {}", ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(ErrorResponse.of(
+                        HttpStatus.CONFLICT.value(),
+                        "Conflict",
+                        "The resource has been modified by another user. Please refresh and try again.",
                         request.getRequestURI()
                 ));
     }

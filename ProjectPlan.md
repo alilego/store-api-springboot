@@ -109,16 +109,16 @@ store-api-springboot/
 - ✅ Create `GlobalExceptionHandler` using `@ControllerAdvice`
 - ✅ Return standardized error response structure:
   - Include: timestamp, status, error, message, path
-- [ ] Return appropriate HTTP status codes (e.g., 400, 403, 404, 409, 500)
-- [ ] Handle key exceptions explicitly:
+- ✅ Return appropriate HTTP status codes (e.g., 400, 403, 404, 409, 500)
+- ✅ Handle key exceptions explicitly:
   - `OptimisticLockException` → 409 Conflict
   - `MethodArgumentNotValidException` (validation failure) → 400 Bad Request
   - `HttpMessageNotReadableException` (malformed JSON) → 400 Bad Request
   - `AccessDeniedException` → 403 Forbidden
   - `DataIntegrityViolationException` → 409 Conflict or 400
 - [ ] Fallback: handle `Exception` → 500 Internal Server Error
-- [ ] Log all handled exceptions with context (including request details if helpful)
-- [ ] Ensure no sensitive data (credentials, IDs, stack traces) leaks into client responses
+- ✅ Log all handled exceptions with context (including request details if helpful)
+- ✅ Ensure no sensitive data (credentials, IDs, stack traces) leaks into client responses
 
 ---
 
