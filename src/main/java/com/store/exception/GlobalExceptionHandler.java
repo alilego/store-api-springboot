@@ -20,6 +20,7 @@ import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.UUID;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -168,13 +169,20 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<ErrorResponse> handleAllUncaughtException(
             Exception ex, HttpServletRequest request) {
-        logger.error("Unhandled exception occurred", ex);
+        String errorId = UUID.randomUUID().toString();
+        logger.error("Unhandled exception occurred [errorId: {}] - Request: {} {} - Exception: {}",
+            errorId,
+            request.getMethod(),
+            request.getRequestURI(),
+            ex.getClass().getName(),
+            ex);
+            
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ErrorResponse.of(
                         HttpStatus.INTERNAL_SERVER_ERROR.value(),
                         "Internal Server Error",
-                        "An unexpected error occurred",
+                        "An unexpected error occurred. Error ID: " + errorId,
                         request.getRequestURI()
                 ));
     }
