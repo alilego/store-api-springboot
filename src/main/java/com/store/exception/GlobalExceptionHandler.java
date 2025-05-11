@@ -109,13 +109,17 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<ErrorResponse> handleProductNotFoundException(
             ProductNotFoundException ex, HttpServletRequest request) {
-        logger.error("Product not found: {}", ex.getMessage());
+        String message = String.format("Product not found - Request: %s %s - Details: %s",
+            request.getMethod(),
+            request.getRequestURI(),
+            ex.getMessage());
+        logger.warn(message);
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .body(ErrorResponse.of(
                         HttpStatus.NOT_FOUND.value(),
                         "Not Found",
-                        "Product not found",
+                        ex.getMessage(),
                         request.getRequestURI()
                 ));
     }
@@ -124,13 +128,17 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     public ResponseEntity<ErrorResponse> handleProductVersionMismatchException(
             ProductVersionMismatchException ex, HttpServletRequest request) {
-        logger.warn("Product version mismatch: {}", ex.getMessage());
+        String message = String.format("Product version mismatch - Request: %s %s - Details: %s",
+            request.getMethod(),
+            request.getRequestURI(),
+            ex.getMessage());
+        logger.warn(message);
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
                 .body(ErrorResponse.of(
                         HttpStatus.CONFLICT.value(),
                         "Conflict",
-                        "The resource has been modified by another user. Please refresh and try again.",
+                        ex.getMessage(),
                         request.getRequestURI()
                 ));
     }

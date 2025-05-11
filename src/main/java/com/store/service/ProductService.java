@@ -1,18 +1,21 @@
 package com.store.service;
 
+import com.store.config.CacheConfig;
 import com.store.exception.ProductNotFoundException;
 import com.store.exception.ProductVersionMismatchException;
 import com.store.model.Product;
 import com.store.repository.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Service
 @Transactional
@@ -25,6 +28,7 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
+    @CachePut(value = CacheConfig.PRODUCTS_CACHE, key = "#result.id")
     public Product addProduct(Product product) {
         if (product == null) {
             throw new IllegalArgumentException("Product cannot be null");
@@ -33,9 +37,10 @@ public class ProductService {
         return productRepository.save(product);
     }
 
+    @Cacheable(value = CacheConfig.PRODUCTS_CACHE, key = "#id", unless = "#result.deleted")
     @Transactional(readOnly = true)
     public Product getProductById(Long id) {
-        logger.info("Fetching product with id: {}", id);
+        logger.info("Cache miss - Fetching product with id: {}", id);
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + id));
         if (product.isDeleted()) {
@@ -44,6 +49,7 @@ public class ProductService {
         return product;
     }
 
+    @CachePut(value = CacheConfig.PRODUCTS_CACHE, key = "#id")
     public Product updatePrice(Long id, BigDecimal newPrice, Integer expectedVersion) {
         logger.info("Updating price for product id: {} to: {}, expected version: {}", id, newPrice, expectedVersion);
         Product product = getProductById(id);
@@ -67,6 +73,7 @@ public class ProductService {
         return productRepository.findAll(pageable);
     }
 
+    @CacheEvict(value = CacheConfig.PRODUCTS_CACHE, key = "#id")
     public void softDeleteProduct(Long id) {
         logger.info("Soft deleting product with id: {}", id);
         Product product = getProductById(id);
