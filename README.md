@@ -22,6 +22,22 @@ Design and implement a minimal but realistic store management backend with role-
 
 ---
 
+## ▶️ How to Run
+
+```bash
+mvn spring-boot:run
+```
+
+---
+
+## 🧪 How to Test
+
+```bash
+mvn test
+```
+
+---
+
 ## 📡 API Examples
 
 ### Create a Product (ADMIN only)
@@ -283,17 +299,5 @@ Target: Maintainable, testable codebase with clear component boundaries.
 - Persistent external DB
 - OAuth2 / JWT authentication
 
----
 
-## ▶️ How to Run
-
-```bash
-mvn spring-boot:run
-```
-
-## 🧪 How to Test
-
-```bash
-mvn test
-```
 
