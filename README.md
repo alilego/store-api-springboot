@@ -6,7 +6,7 @@ A minimal store management API built with Spring Boot, Java 17, H2, and role-bas
 
 ## 🎯 Goal
 
-Design and implement a minimal but realistic store management backend with role-based access and clear structure. Focus is placed on clean API contracts, Java 17+ features, error handling, and maintainability.
+Design and implement a minimal but realistic store management backend with role-based access and clear structure. Focus is placed on clean API contracts, error handling, and maintainability.
 
 ---
 
@@ -222,24 +222,47 @@ Features:
 ---
 
 ## 🏗️ Architecture Overview
-This project follows a classic **layered architecture** with:
-- Controllers: Handle HTTP requests/responses and input validation
-- Services: Implement business logic and transaction management
-- Repositories: Handle data access using Spring Data JPA
-- DTOs: Manage data transfer objects for clean API contracts
-- Models: Define JPA entities with auditing support
 
-Target: clear separation of concerns & maintainability.
+This project follows a classic **layered architecture** with:
+
+### Core Components
+- **Controllers**: REST endpoints, input validation, API docs
+- **Services**: Business logic, transactions, caching
+- **Data Layer**: JPA entities and repositories, pagination, auditing
+
+### Cross-Cutting Features
+- **Security**: Role-based access with Spring Security
+- **Observability**: Structured logging with request tracking
+- **Error Handling**: Global exception handling with standard responses
+- **Caching**: In-memory caching with Caffeine
+- **DTOs**: Clean API contracts and validation
+- **Documentation**: OpenAPI/Swagger + Postman collection
+
+Target: Maintainable, testable codebase with clear component boundaries.
 
 ## 🔧 Tech Stack
-- Java 17
-- Spring Boot
-- Spring Security
-- Spring Data JPA
-- H2 (in-memory DB)
-- Maven
-- JUnit 5
-- SLF4J / Logback for logging
+
+### Core
+- **Language**: Java 17
+- **Framework**: Spring Boot
+- **Build Tool**: Maven
+
+### Security & Validation
+- **Authentication**: Spring Security
+- **Input Validation**: Jakarta Validation
+
+### Data
+- **ORM**: Spring Data JPA
+- **Database**: H2 (in-memory)
+- **Caching**: Caffeine
+
+### Documentation
+- **API Docs**: SpringDoc OpenAPI (Swagger)
+- **API Testing**: Postman
+
+### Observability
+- **Logging**: SLF4J / Logback / MDC
+- **Testing**: JUnit 5
 
 ---
 
