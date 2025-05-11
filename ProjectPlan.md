@@ -103,7 +103,7 @@ store-api-springboot/
   
 ---
 
-### ⬜ Step 8: Error Handling
+### ✅ Step 8: Error Handling
 
 - ✅ Create custom exception `ProductNotFoundException`
 - ✅ Create `GlobalExceptionHandler` using `@ControllerAdvice`
@@ -116,7 +116,7 @@ store-api-springboot/
   - `HttpMessageNotReadableException` (malformed JSON) → 400 Bad Request
   - `AccessDeniedException` → 403 Forbidden
   - `DataIntegrityViolationException` → 409 Conflict or 400
-- [ ] Fallback: handle `Exception` → 500 Internal Server Error
+- ✅ Fallback: handle `Exception` → 500 Internal Server Error
 - ✅ Log all handled exceptions with context (including request details if helpful)
 - ✅ Ensure no sensitive data (credentials, IDs, stack traces) leaks into client responses
 
@@ -139,9 +139,9 @@ store-api-springboot/
 
 ---
 
-### ⬜ Step 11: Optional Stretch Goals
+### ✅ Step 11: Optional Stretch Goals
 
-- [ ] Add pagination to `GET /products`
+- ✅ Add pagination to `GET /products`
 - ✅ Add input validation (`@Valid`, DTOs)
 
 ---

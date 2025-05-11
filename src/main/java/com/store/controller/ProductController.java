@@ -14,6 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 @RestController
 @RequestMapping("/api/products")
@@ -68,15 +71,24 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductResponse>> getAllProducts() {
-        logger.info("GET /api/products - Fetching all products");
+    public ResponseEntity<Page<ProductResponse>> getAllProducts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String direction) {
+        logger.info("GET /api/products - Fetching products with pagination: page={}, size={}, sortBy={}, direction={}", 
+            page, size, sortBy, direction);
         
-        List<Product> products = productService.getAllProducts();
-        List<ProductResponse> response = products.stream()
-                .map(ProductResponse::from)
-                .toList();
+        Sort.Direction sortDirection = Sort.Direction.fromString(direction.toUpperCase());
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(sortDirection, sortBy));
         
-        logger.info("GET /api/products - Found {} products", response.size());
+        Page<Product> products = productService.getAllProducts(pageRequest);
+        Page<ProductResponse> response = products.map(ProductResponse::from);
+        
+        logger.info("GET /api/products - Found {} products (page {} of {})", 
+            response.getNumberOfElements(), 
+            response.getNumber() + 1, 
+            response.getTotalPages());
         return ResponseEntity.ok(response);
     }
 } 

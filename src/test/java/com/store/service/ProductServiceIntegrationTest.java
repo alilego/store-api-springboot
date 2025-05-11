@@ -8,6 +8,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SpringBootTest
 @ActiveProfiles("test")
 @Transactional
-class ProductServiceIntegrationTest {
+public class ProductServiceIntegrationTest {
 
     @Autowired
     private ProductService productService;
@@ -30,7 +34,18 @@ class ProductServiceIntegrationTest {
 
     @BeforeEach
     void setUp() {
+        // Clear existing data
         productRepository.deleteAll();
+
+        // Create test products
+        List<Product> products = List.of(
+            new Product("Product 1", new BigDecimal("10.00")),
+            new Product("Product 2", new BigDecimal("20.00")),
+            new Product("Product 3", new BigDecimal("30.00")),
+            new Product("Product 4", new BigDecimal("40.00")),
+            new Product("Product 5", new BigDecimal("50.00"))
+        );
+        productRepository.saveAll(products);
     }
 
     @Test
@@ -116,20 +131,52 @@ class ProductServiceIntegrationTest {
     }
 
     @Test
-    void getAllProducts_ShouldReturnAllPersistedProducts() {
-        // Arrange
-        Product product1 = new Product("Product 1", new BigDecimal("100.00"));
-        Product product2 = new Product("Product 2", new BigDecimal("200.00"));
-        productService.addProduct(product1);
-        productService.addProduct(product2);
+    void getAllProducts_ShouldReturnPaginatedResults() {
+        // Given
+        Pageable pageable = PageRequest.of(0, 2, Sort.by("name"));
 
-        // Act
-        List<Product> allProducts = productService.getAllProducts();
+        // When
+        Page<Product> result = productService.getAllProducts(pageable);
 
-        // Assert
-        assertThat(allProducts).hasSize(2);
-        assertThat(allProducts)
-                .extracting(Product::getName)
-                .containsExactlyInAnyOrder("Product 1", "Product 2");
+        // Then
+        assertThat(result).isNotNull();
+        assertThat(result.getContent()).hasSize(2);
+        assertThat(result.getTotalElements()).isEqualTo(5);
+        assertThat(result.getTotalPages()).isEqualTo(3);
+        assertThat(result.getContent().get(0).getName()).isEqualTo("Product 1");
+        assertThat(result.getContent().get(1).getName()).isEqualTo("Product 2");
+    }
+
+    @Test
+    void getAllProducts_ShouldReturnSecondPage() {
+        // Given
+        Pageable pageable = PageRequest.of(1, 2, Sort.by("name"));
+
+        // When
+        Page<Product> result = productService.getAllProducts(pageable);
+
+        // Then
+        assertThat(result).isNotNull();
+        assertThat(result.getContent()).hasSize(2);
+        assertThat(result.getTotalElements()).isEqualTo(5);
+        assertThat(result.getTotalPages()).isEqualTo(3);
+        assertThat(result.getContent().get(0).getName()).isEqualTo("Product 3");
+        assertThat(result.getContent().get(1).getName()).isEqualTo("Product 4");
+    }
+
+    @Test
+    void getAllProducts_ShouldReturnLastPage() {
+        // Given
+        Pageable pageable = PageRequest.of(2, 2, Sort.by("name"));
+
+        // When
+        Page<Product> result = productService.getAllProducts(pageable);
+
+        // Then
+        assertThat(result).isNotNull();
+        assertThat(result.getContent()).hasSize(1);
+        assertThat(result.getTotalElements()).isEqualTo(5);
+        assertThat(result.getTotalPages()).isEqualTo(3);
+        assertThat(result.getContent().get(0).getName()).isEqualTo("Product 5");
     }
 } 

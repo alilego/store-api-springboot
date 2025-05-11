@@ -12,6 +12,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -155,17 +159,24 @@ class ProductServiceTest {
     }
 
     @Test
-    void getAllProducts_ShouldReturnListOfProducts() {
-        logger.info("\n{}\n>>> TEST: getAllProducts_ShouldReturnListOfProducts <<<\n{}", TEST_SEPARATOR, TEST_SEPARATOR);
+    void getAllProducts_ShouldReturnPaginatedResults() {
+        logger.info("\n{}\n>>> TEST: getAllProducts_ShouldReturnPaginatedResults <<<\n{}", TEST_SEPARATOR, TEST_SEPARATOR);
         
+        // Given
+        Pageable pageable = PageRequest.of(0, 10);
         List<Product> productList = Arrays.asList(testProduct);
-        when(productRepository.findAll()).thenReturn(productList);
+        Page<Product> productPage = new PageImpl<>(productList, pageable, productList.size());
         
-        List<Product> foundProducts = productService.getAllProducts();
+        when(productRepository.findAll(pageable)).thenReturn(productPage);
         
-        assertThat(foundProducts).isNotNull();
-        assertThat(foundProducts).hasSize(1);
-        assertThat(foundProducts.get(0).getId()).isEqualTo(1L);
-        verify(productRepository, times(1)).findAll();
+        // When
+        Page<Product> result = productService.getAllProducts(pageable);
+        
+        // Then
+        assertThat(result).isNotNull();
+        assertThat(result.getContent()).hasSize(1);
+        assertThat(result.getTotalElements()).isEqualTo(1);
+        assertThat(result.getContent().get(0).getId()).isEqualTo(1L);
+        verify(productRepository, times(1)).findAll(pageable);
     }
 } 

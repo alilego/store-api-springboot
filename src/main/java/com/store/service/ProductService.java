@@ -6,6 +6,8 @@ import com.store.model.Product;
 import com.store.repository.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,8 +55,11 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public List<Product> getAllProducts() {
-        logger.info("Fetching all products");
-        return productRepository.findAll();
+    public Page<Product> getAllProducts(Pageable pageable) {
+        logger.info("Fetching products with pagination: page={}, size={}, sort={}", 
+            pageable.getPageNumber(), 
+            pageable.getPageSize(), 
+            pageable.getSort());
+        return productRepository.findAll(pageable);
     }
 } 
