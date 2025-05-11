@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
+import jakarta.persistence.EntityManager;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -31,6 +32,9 @@ public class ProductServiceIntegrationTest {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @BeforeEach
     void setUp() {
@@ -178,5 +182,38 @@ public class ProductServiceIntegrationTest {
         assertThat(result.getTotalElements()).isEqualTo(5);
         assertThat(result.getTotalPages()).isEqualTo(3);
         assertThat(result.getContent().get(0).getName()).isEqualTo("Product 5");
+    }
+
+    @Test
+    void softDeleteProduct_ShouldMarkProductAsDeleted() {
+        // Arrange
+        Product newProduct = new Product("Soft Delete Test", new BigDecimal("123.45"));
+        Product savedProduct = productService.addProduct(newProduct);
+        Long id = savedProduct.getId();
+
+        // Act
+        productService.softDeleteProduct(id);
+        entityManager.flush();
+        entityManager.clear();
+
+        // Assert
+        assertThatThrownBy(() -> productService.getProductById(id))
+            .isInstanceOf(ProductNotFoundException.class)
+            .hasMessageContaining("Product not found with id: " + id);
+    }
+
+    @Test
+    void getAllProducts_ShouldNotReturnSoftDeletedProducts() {
+        // Arrange
+        Product newProduct = new Product("Soft Delete Test", new BigDecimal("123.45"));
+        Product savedProduct = productService.addProduct(newProduct);
+        Long id = savedProduct.getId();
+        productService.softDeleteProduct(id);
+
+        // Act
+        Page<Product> result = productService.getAllProducts(PageRequest.of(0, 10));
+
+        // Assert
+        assertThat(result.getContent().stream().noneMatch(p -> p.getId().equals(id))).isTrue();
     }
 } 

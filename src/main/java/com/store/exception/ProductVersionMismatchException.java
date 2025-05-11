@@ -12,6 +12,6 @@ public class ProductVersionMismatchException extends RuntimeException {
     
     public ProductVersionMismatchException(String message) {
         super(message);
-        logger.error("Product version mismatch: {}", message);
+        logger.warn("Product version mismatch: {}", message);
     }
 } 

@@ -9,7 +9,8 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
-@Table(name = "products")
+@Table(name = "products", indexes = {@Index(name = "idx_product_id", columnList = "id")})
+@org.hibernate.annotations.Where(clause = "deleted = false")
 @EntityListeners(AuditingEntityListener.class)
 public class Product {
     
@@ -33,6 +34,9 @@ public class Product {
     @LastModifiedDate
     @Column(nullable = false)
     private Instant updatedAt;
+
+    @Column(nullable = false)
+    private boolean deleted = false;
 
     // Default constructor required by JPA
     protected Product() {}
@@ -77,5 +81,13 @@ public class Product {
 
     public Instant getUpdatedAt() {
         return updatedAt;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 } 

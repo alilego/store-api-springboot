@@ -987,6 +987,74 @@
               ]
             }
           ]
+        },
+        {
+          "name": "Soft Delete Product (Admin Only)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Basic {{adminAuthHeader}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/products/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products", "1"]
+            }
+          },
+          "response": [
+            {
+              "name": "No Content Response (Success)",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Basic {{adminAuthHeader}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "products", "1"]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "body": ""
+            },
+            {
+              "name": "Not Found Response",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Basic {{adminAuthHeader}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/999",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "products", "999"]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n    \"status\": 404,\n    \"error\": \"Not Found\",\n    \"message\": \"Product not found with id: 999\",\n    \"path\": \"/api/products/999\"\n}"
+            }
+          ]
         }
       ]
     }

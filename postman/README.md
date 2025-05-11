@@ -50,6 +50,13 @@ The collection uses the following environment variables:
   - Default pagination (user role)
   - Custom pagination (5 per page, sorted by name)
 
+#### Soft Delete Product (Admin Only)
+- **DELETE** `/api/products/{id}`
+- Requires admin authentication
+- Test cases:
+  - Success case (204 No Content)
+  - Not found (unknown ID, 404 Not Found)
+
 ## Testing Tips
 
 1. **Role-Based Testing**

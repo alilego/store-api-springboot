@@ -36,8 +36,12 @@ public class ProductService {
     @Transactional(readOnly = true)
     public Product getProductById(Long id) {
         logger.info("Fetching product with id: {}", id);
-        return productRepository.findById(id)
+        Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + id));
+        if (product.isDeleted()) {
+            throw new ProductNotFoundException("Product not found with id: " + id);
+        }
+        return product;
     }
 
     public Product updatePrice(Long id, BigDecimal newPrice, Integer expectedVersion) {
@@ -61,5 +65,11 @@ public class ProductService {
             pageable.getPageSize(), 
             pageable.getSort());
         return productRepository.findAll(pageable);
+    }
+
+    public void softDeleteProduct(Long id) {
+        logger.info("Soft deleting product with id: {}", id);
+        Product product = getProductById(id);
+        productRepository.softDeleteById(id);
     }
 } 

@@ -91,4 +91,11 @@ public class ProductController {
             response.getTotalPages());
         return ResponseEntity.ok(response);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+        logger.info("DELETE /api/products/{} - Soft deleting product", id);
+        productService.softDeleteProduct(id);
+        return ResponseEntity.noContent().build();
+    }
 } 

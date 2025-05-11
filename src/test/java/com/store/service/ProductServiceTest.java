@@ -179,4 +179,25 @@ class ProductServiceTest {
         assertThat(result.getContent().get(0).getId()).isEqualTo(1L);
         verify(productRepository, times(1)).findAll(pageable);
     }
+
+    @Test
+    void softDeleteProduct_ShouldMarkProductAsDeleted() {
+        logger.info("\n{}\n>>> TEST: softDeleteProduct_ShouldMarkProductAsDeleted <<<\n{}", TEST_SEPARATOR, TEST_SEPARATOR);
+        testProduct.setDeleted(false);
+        when(productRepository.findById(1L)).thenReturn(Optional.of(testProduct));
+        doNothing().when(productRepository).softDeleteById(1L);
+        productService.softDeleteProduct(1L);
+        verify(productRepository, times(1)).softDeleteById(1L);
+    }
+
+    @Test
+    void getProductById_ShouldThrowException_WhenProductIsDeleted() {
+        logger.info("\n{}\n>>> TEST: getProductById_ShouldThrowException_WhenProductIsDeleted <<<\n{}", TEST_SEPARATOR, TEST_SEPARATOR);
+        testProduct.setDeleted(true);
+        when(productRepository.findById(1L)).thenReturn(Optional.of(testProduct));
+        assertThatThrownBy(() -> productService.getProductById(1L))
+            .isInstanceOf(ProductNotFoundException.class)
+            .hasMessageContaining("Product not found with id: 1");
+        verify(productRepository, times(1)).findById(1L);
+    }
 } 
