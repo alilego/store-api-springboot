@@ -25,13 +25,6 @@ Design and implement a minimal but realistic store management backend with role-
 - All endpoints require Basic Authentication
 - Content-Type: `application/json`
 
-### Common Query Parameters
-- **GET `/api/products`**:
-  - `page`: Page number (default: 0)
-  - `size`: Items per page (default: 10)
-  - `sortBy`: Field to sort by (default: "id")
-  - `direction`: Sort direction - "asc" or "desc" (default: "asc")
-
 ---
 
 ## ▶️ How to Run
