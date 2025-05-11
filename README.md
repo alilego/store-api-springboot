@@ -175,6 +175,26 @@ For detailed documentation about the test cases and usage, see `/postman/README.
 
 ---
 
+## 📚 API Documentation
+
+### Swagger UI
+The API documentation is available through Swagger UI at:
+- [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+
+### OpenAPI Specification
+The OpenAPI specification is available at:
+- [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs) (JSON)
+- [http://localhost:8080/v3/api-docs.yaml](http://localhost:8080/v3/api-docs.yaml) (YAML)
+
+Features:
+- Interactive API documentation
+- Try-it-out functionality with authentication
+- Detailed request/response schemas
+- Role-based security documentation
+- Built-in authentication support
+
+---
+
 ## 🔐 Security
 
 ### Authentication & Roles
@@ -225,7 +245,7 @@ Target: clear separation of concerns & maintainability.
 
 ## 🧠 Design Decisions
 
-- **Top-Down Approach**: Started from API contract to ensure clarity and focused on business 1st.
+- **Top-Down Approach**: Started from API contract to ensure clarity and focus on business 1st.
 - **H2 In-Memory DB**: Simulates real persistence with minimal setup; integrates cleanly with Spring Data JPA.
 - **In-Memory Security**: Simple, role-based authentication using Spring Security to demonstrate access control.
 - **Layered Structure**: Separation of concerns (Controller → Service → Repository) for clarity and testability.
@@ -233,13 +253,11 @@ Target: clear separation of concerns & maintainability.
 - **Soft Deletes**: Products are marked as deleted rather than physically removed.
 - **Auditing**: Automatic tracking of creation and modification timestamps.
 - **Pagination**: Built-in support for large datasets with sorting options.
-- **Minimal Testing**: Unit & integration testing at service layer to demonstrate code testability, as per assignment scope.
-- **No Swagger**: Omitted for simplicity, with API documented directly in README.
+- **Minimal CI Testing**: Unit & integration testing for service layer to demonstrate code testability, as per assignment scope.
 
 ## ❌ Excluded by Design
 - Frontend
 - Persistent external DB
-- Swagger/OpenAPI
 - OAuth2 / JWT authentication
 
 ---

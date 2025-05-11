@@ -148,7 +148,7 @@ store-api-springboot/
 
 ---
 
-### ⬜ Step 12: Finalization & Delivery
+### ✅ Step 12: Finalization & Delivery
 
 - ✅ Finalize `README.md` with final features and instructions:
 - Usage instructions
@@ -157,4 +157,4 @@ store-api-springboot/
 - Design decisions
 - Architecture overview
 - ✅ Polish code: remove stubs, organize imports, format
-- [ ] Verify project runs cleanly
+- ✅ Verify project runs cleanly
