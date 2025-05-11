@@ -150,11 +150,11 @@ store-api-springboot/
 
 ### ⬜ Step 12: Finalization & Delivery
 
-- [ ] Finalize `README.md` with final features and instructions:
+- ✅ Finalize `README.md` with final features and instructions:
 - Usage instructions
 - Example API calls
 - Test credentials
 - Design decisions
 - Architecture overview
-- [ ] Polish code: remove stubs, organize imports, format
+- ✅ Polish code: remove stubs, organize imports, format
 - [ ] Verify project runs cleanly
