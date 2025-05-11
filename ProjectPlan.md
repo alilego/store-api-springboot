@@ -17,9 +17,7 @@ This document outlines the step-by-step plan to implement the Store Management A
 
 ### ✅ Step 2: Scaffold the Spring Boot Project
 
-- ✅ Generate Spring Boot + Maven project with:
-  - Spring Web 
-  - Lombok
+- ✅ Generate Spring Boot + Maven project with Spring Web 
 - ✅ Set Java version to 17
 - ✅ Create base package structure:
 ```
