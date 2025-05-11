@@ -143,6 +143,7 @@ store-api-springboot/
 
 - ✅ Add pagination to `GET /products`
 - ✅ Add input validation (`@Valid`, DTOs)
+- ✅ Add soft delete API with admin access
 
 ---
 
