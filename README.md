@@ -12,13 +12,25 @@ Design and implement a minimal but realistic store management backend with role-
 
 ## ✅ Target API Endpoints
 
-| Method | Endpoint            | Role Access | Description               |
-|--------|---------------------|-------------|---------------------------|
-| POST   | `/products`         | ADMIN       | Add a new product         |
-| GET    | `/products`         | USER, ADMIN | List all products (paginated) |
-| GET    | `/products/{id}`    | USER, ADMIN | Retrieve a product by ID  |
-| PUT    | `/products/{id}`    | ADMIN       | Change the product's price|
-| DELETE | `/products/{id}`    | ADMIN       | Soft delete a product     |
+| Method | Endpoint                    | Role Access | Description                                    |
+|--------|----------------------------|-------------|------------------------------------------------|
+| POST   | `/api/products`            | ADMIN       | Create a new product                           |
+| GET    | `/api/products`            | USER, ADMIN | List all products with pagination and sorting  |
+| GET    | `/api/products/{id}`       | USER, ADMIN | Get a product by ID                           |
+| PUT    | `/api/products/{id}`       | ADMIN       | Update product price with optimistic locking   |
+| DELETE | `/api/products/{id}`       | ADMIN       | Soft delete a product                         |
+
+### Base URL
+- Local: `http://localhost:8080`
+- All endpoints require Basic Authentication
+- Content-Type: `application/json`
+
+### Common Query Parameters
+- **GET `/api/products`**:
+  - `page`: Page number (default: 0)
+  - `size`: Items per page (default: 10)
+  - `sortBy`: Field to sort by (default: "id")
+  - `direction`: Sort direction - "asc" or "desc" (default: "asc")
 
 ---
 
