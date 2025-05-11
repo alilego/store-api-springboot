@@ -1,0 +1,1013 @@
+{
+  "info": {
+    "name": "Store API",
+    "description": "API collection for testing the Store API endpoints with banking products and security roles",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Create Product (Admin Only)",
+          "item": [
+            {
+              "name": "Success Case",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Basic {{adminAuthHeader}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"Premium Credit Card\",\n    \"price\": 95.00\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "products"]
+                }
+              },
+              "response": [
+                {
+                  "name": "Success Response (Admin)",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Basic {{adminAuthHeader}}"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"name\": \"Premium Credit Card\",\n    \"price\": 95.00\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "products"]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "{\n    \"id\": 1,\n    \"name\": \"Premium Credit Card\",\n    \"price\": 95.00,\n    \"version\": 0,\n    \"createdAt\": \"2024-03-14T12:00:00Z\",\n    \"updatedAt\": \"2024-03-14T12:00:00Z\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Invalid Input - Missing Required Fields",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Basic {{adminAuthHeader}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "products"]
+                }
+              },
+              "response": [
+                {
+                  "name": "Validation Error Response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Basic {{adminAuthHeader}}"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"name\": \"\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "products"]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "{\n    \"status\": 400,\n    \"error\": \"Bad Request\",\n    \"message\": \"Validation failed\",\n    \"errors\": [\n        {\n            \"field\": \"name\",\n            \"message\": \"Name cannot be empty\"\n        },\n        {\n            \"field\": \"price\",\n            \"message\": \"Price is required\"\n        }\n    ]\n}"
+                }
+              ]
+            },
+            {
+              "name": "Invalid Input - Negative Price",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Basic {{adminAuthHeader}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"Invalid Product\",\n    \"price\": -10.00\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "products"]
+                }
+              },
+              "response": [
+                {
+                  "name": "Validation Error Response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Basic {{adminAuthHeader}}"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"name\": \"Invalid Product\",\n    \"price\": -10.00\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "products"]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "{\n    \"status\": 400,\n    \"error\": \"Bad Request\",\n    \"message\": \"Validation failed\",\n    \"errors\": [\n        {\n            \"field\": \"price\",\n            \"message\": \"Price must be greater than or equal to 0\"\n        }\n    ]\n}"
+                }
+              ]
+            },
+            {
+              "name": "Unauthorized - User Role",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Basic {{userAuthHeader}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"Premium Credit Card\",\n    \"price\": 95.00\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "products"]
+                }
+              },
+              "response": [
+                {
+                  "name": "Forbidden Response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Basic {{userAuthHeader}}"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"name\": \"Premium Credit Card\",\n    \"price\": 95.00\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "products"]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "{\n    \"status\": 403,\n    \"error\": \"Forbidden\",\n    \"message\": \"Access denied\",\n    \"path\": \"/api/products\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Get Product by ID (User/Admin)",
+          "item": [
+            {
+              "name": "Success Case - Admin",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Basic {{adminAuthHeader}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "products", "1"]
+                }
+              },
+              "response": [
+                {
+                  "name": "Success Response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Basic {{adminAuthHeader}}"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products/1",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "products", "1"]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "{\n    \"id\": 1,\n    \"name\": \"Personal Checking Account\",\n    \"price\": 0.00,\n    \"version\": 0,\n    \"createdAt\": \"2024-03-14T12:00:00Z\",\n    \"updatedAt\": \"2024-03-14T12:00:00Z\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Success Case - User",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Basic {{userAuthHeader}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "products", "1"]
+                }
+              },
+              "response": [
+                {
+                  "name": "Success Response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Basic {{userAuthHeader}}"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products/1",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "products", "1"]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "{\n    \"id\": 1,\n    \"name\": \"Personal Checking Account\",\n    \"price\": 0.00,\n    \"version\": 0,\n    \"createdAt\": \"2024-03-14T12:00:00Z\",\n    \"updatedAt\": \"2024-03-14T12:00:00Z\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Not Found - Unknown ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Basic {{adminAuthHeader}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/999",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "products", "999"]
+                }
+              },
+              "response": [
+                {
+                  "name": "Not Found Response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Basic {{adminAuthHeader}}"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products/999",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "products", "999"]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "{\n    \"status\": 404,\n    \"error\": \"Not Found\",\n    \"message\": \"Product not found with id: 999\",\n    \"path\": \"/api/products/999\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Update Product Price (Admin Only)",
+          "item": [
+            {
+              "name": "Success Case - With Version",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Basic {{adminAuthHeader}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"price\": 25.00,\n    \"version\": 0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/2",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "products", "2"]
+                }
+              },
+              "response": [
+                {
+                  "name": "Success Response (Admin)",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Basic {{adminAuthHeader}}"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"price\": 25.00,\n    \"version\": 0\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products/2",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "products", "2"]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "{\n    \"id\": 2,\n    \"name\": \"Business Checking Account\",\n    \"price\": 25.00,\n    \"version\": 1,\n    \"createdAt\": \"2024-03-14T12:00:00Z\",\n    \"updatedAt\": \"2024-03-14T12:00:00Z\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Success Case - Without Version",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Basic {{adminAuthHeader}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"price\": 25.00\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/2",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "products", "2"]
+                }
+              },
+              "response": [
+                {
+                  "name": "Success Response (Admin)",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Basic {{adminAuthHeader}}"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"price\": 25.00\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products/2",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "products", "2"]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "{\n    \"id\": 2,\n    \"name\": \"Business Checking Account\",\n    \"price\": 25.00,\n    \"version\": 1,\n    \"createdAt\": \"2024-03-14T12:00:00Z\",\n    \"updatedAt\": \"2024-03-14T12:00:00Z\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Invalid Input - Negative Price",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Basic {{adminAuthHeader}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"price\": -10.00,\n    \"version\": 0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/2",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "products", "2"]
+                }
+              },
+              "response": [
+                {
+                  "name": "Validation Error Response",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Basic {{adminAuthHeader}}"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"price\": -10.00,\n    \"version\": 0\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products/2",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "products", "2"]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "{\n    \"status\": 400,\n    \"error\": \"Bad Request\",\n    \"message\": \"Validation failed\",\n    \"errors\": [\n        {\n            \"field\": \"price\",\n            \"message\": \"Price must be greater than or equal to 0\"\n        }\n    ]\n}"
+                }
+              ]
+            },
+            {
+              "name": "Version Mismatch",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Basic {{adminAuthHeader}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"price\": 25.00,\n    \"version\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/2",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "products", "2"]
+                }
+              },
+              "response": [
+                {
+                  "name": "Conflict Response",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Basic {{adminAuthHeader}}"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"price\": 25.00,\n    \"version\": 1\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products/2",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "products", "2"]
+                    }
+                  },
+                  "status": "Conflict",
+                  "code": 409,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "{\n    \"status\": 409,\n    \"error\": \"Conflict\",\n    \"message\": \"Version mismatch. Current version is 0\",\n    \"path\": \"/api/products/2\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Unauthorized - User Role",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Basic {{userAuthHeader}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"price\": 25.00,\n    \"version\": 0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/2",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "products", "2"]
+                }
+              },
+              "response": [
+                {
+                  "name": "Forbidden Response",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Basic {{userAuthHeader}}"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"price\": 25.00,\n    \"version\": 0\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products/2",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "products", "2"]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "{\n    \"status\": 403,\n    \"error\": \"Forbidden\",\n    \"message\": \"Access denied\",\n    \"path\": \"/api/products/2\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Get All Products (User/Admin)",
+          "item": [
+            {
+              "name": "Default Pagination - Admin",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Basic {{adminAuthHeader}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "products"]
+                }
+              },
+              "response": [
+                {
+                  "name": "Success Response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Basic {{adminAuthHeader}}"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "products"]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "{\n    \"content\": [\n        {\n            \"id\": 1,\n            \"name\": \"Business Checking Account\",\n            \"price\": 15.00,\n            \"version\": 0,\n            \"createdAt\": \"2024-03-14T12:00:00Z\",\n            \"updatedAt\": \"2024-03-14T12:00:00Z\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Business Loan\",\n            \"price\": 0.00,\n            \"version\": 0,\n            \"createdAt\": \"2024-03-14T12:00:00Z\",\n            \"updatedAt\": \"2024-03-14T12:00:00Z\"\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Certificate of Deposit (1 Year)\",\n            \"price\": 1000.00,\n            \"version\": 0,\n            \"createdAt\": \"2024-03-14T12:00:00Z\",\n            \"updatedAt\": \"2024-03-14T12:00:00Z\"\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Certificate of Deposit (5 Year)\",\n            \"price\": 1000.00,\n            \"version\": 0,\n            \"createdAt\": \"2024-03-14T12:00:00Z\",\n            \"updatedAt\": \"2024-03-14T12:00:00Z\"\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Credit Card (Basic)\",\n            \"price\": 0.00,\n            \"version\": 0,\n            \"createdAt\": \"2024-03-14T12:00:00Z\",\n            \"updatedAt\": \"2024-03-14T12:00:00Z\"\n        }\n    ],\n    \"pageable\": {\n        \"pageNumber\": 0,\n        \"pageSize\": 5,\n        \"sort\": {\n            \"sorted\": true,\n            \"unsorted\": false,\n            \"empty\": false\n        },\n        \"offset\": 0,\n        \"paged\": true,\n        \"unpaged\": false\n    },\n    \"totalElements\": 12,\n    \"totalPages\": 3,\n    \"last\": false,\n    \"size\": 5,\n    \"number\": 0,\n    \"sort\": {\n        \"sorted\": true,\n        \"unsorted\": false,\n        \"empty\": false\n    },\n    \"numberOfElements\": 5,\n    \"first\": true,\n    \"empty\": false\n}"
+                }
+              ]
+            },
+            {
+              "name": "Default Pagination - User",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Basic {{userAuthHeader}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "products"]
+                }
+              },
+              "response": [
+                {
+                  "name": "Success Response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Basic {{userAuthHeader}}"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "products"]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "{\n    \"content\": [\n        {\n            \"id\": 1,\n            \"name\": \"Business Checking Account\",\n            \"price\": 15.00,\n            \"version\": 0,\n            \"createdAt\": \"2024-03-14T12:00:00Z\",\n            \"updatedAt\": \"2024-03-14T12:00:00Z\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Business Loan\",\n            \"price\": 0.00,\n            \"version\": 0,\n            \"createdAt\": \"2024-03-14T12:00:00Z\",\n            \"updatedAt\": \"2024-03-14T12:00:00Z\"\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Certificate of Deposit (1 Year)\",\n            \"price\": 1000.00,\n            \"version\": 0,\n            \"createdAt\": \"2024-03-14T12:00:00Z\",\n            \"updatedAt\": \"2024-03-14T12:00:00Z\"\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Certificate of Deposit (5 Year)\",\n            \"price\": 1000.00,\n            \"version\": 0,\n            \"createdAt\": \"2024-03-14T12:00:00Z\",\n            \"updatedAt\": \"2024-03-14T12:00:00Z\"\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Credit Card (Basic)\",\n            \"price\": 0.00,\n            \"version\": 0,\n            \"createdAt\": \"2024-03-14T12:00:00Z\",\n            \"updatedAt\": \"2024-03-14T12:00:00Z\"\n        }\n    ],\n    \"pageable\": {\n        \"pageNumber\": 0,\n        \"pageSize\": 5,\n        \"sort\": {\n            \"sorted\": true,\n            \"unsorted\": false,\n            \"empty\": false\n        },\n        \"offset\": 0,\n        \"paged\": true,\n        \"unpaged\": false\n    },\n    \"totalElements\": 12,\n    \"totalPages\": 3,\n    \"last\": false,\n    \"size\": 5,\n    \"number\": 0,\n    \"sort\": {\n        \"sorted\": true,\n        \"unsorted\": false,\n        \"empty\": false\n    },\n    \"numberOfElements\": 5,\n    \"first\": true,\n    \"empty\": false\n}"
+                }
+              ]
+            },
+            {
+              "name": "Custom Pagination - 5 per page, sorted by name",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Basic {{adminAuthHeader}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products?page=0&size=5&sortBy=name&direction=asc",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "products"],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "key": "size",
+                      "value": "5"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "name"
+                    },
+                    {
+                      "key": "direction",
+                      "value": "asc"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Success Response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Authorization",
+                        "value": "Basic {{adminAuthHeader}}"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/products?page=0&size=5&sortBy=name&direction=asc",
+                      "host": ["{{baseUrl}}"],
+                      "path": ["api", "products"],
+                      "query": [
+                        {
+                          "key": "page",
+                          "value": "0"
+                        },
+                        {
+                          "key": "size",
+                          "value": "5"
+                        },
+                        {
+                          "key": "sortBy",
+                          "value": "name"
+                        },
+                        {
+                          "key": "direction",
+                          "value": "asc"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "{\n    \"content\": [\n        {\n            \"id\": 1,\n            \"name\": \"Business Checking Account\",\n            \"price\": 15.00,\n            \"version\": 0,\n            \"createdAt\": \"2024-03-14T12:00:00Z\",\n            \"updatedAt\": \"2024-03-14T12:00:00Z\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Business Loan\",\n            \"price\": 0.00,\n            \"version\": 0,\n            \"createdAt\": \"2024-03-14T12:00:00Z\",\n            \"updatedAt\": \"2024-03-14T12:00:00Z\"\n        },\n        {\n            \"id\": 3,\n            \"name\": \"Certificate of Deposit (1 Year)\",\n            \"price\": 1000.00,\n            \"version\": 0,\n            \"createdAt\": \"2024-03-14T12:00:00Z\",\n            \"updatedAt\": \"2024-03-14T12:00:00Z\"\n        },\n        {\n            \"id\": 4,\n            \"name\": \"Certificate of Deposit (5 Year)\",\n            \"price\": 1000.00,\n            \"version\": 0,\n            \"createdAt\": \"2024-03-14T12:00:00Z\",\n            \"updatedAt\": \"2024-03-14T12:00:00Z\"\n        },\n        {\n            \"id\": 5,\n            \"name\": \"Credit Card (Basic)\",\n            \"price\": 0.00,\n            \"version\": 0,\n            \"createdAt\": \"2024-03-14T12:00:00Z\",\n            \"updatedAt\": \"2024-03-14T12:00:00Z\"\n        }\n    ],\n    \"pageable\": {\n        \"pageNumber\": 0,\n        \"pageSize\": 5,\n        \"sort\": {\n            \"sorted\": true,\n            \"unsorted\": false,\n            \"empty\": false\n        },\n        \"offset\": 0,\n        \"paged\": true,\n        \"unpaged\": false\n    },\n    \"totalElements\": 12,\n    \"totalPages\": 3,\n    \"last\": false,\n    \"size\": 5,\n    \"number\": 0,\n    \"sort\": {\n        \"sorted\": true,\n        \"unsorted\": false,\n        \"empty\": false\n    },\n    \"numberOfElements\": 5,\n    \"first\": true,\n    \"empty\": false\n}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "adminAuthHeader",
+      "value": "YWRtaW46YWRtaW5wYXNz",
+      "type": "string",
+      "description": "Base64 encoded 'admin:adminpass'"
+    },
+    {
+      "key": "userAuthHeader",
+      "value": "dXNlcjp1c2VycGFzcw==",
+      "type": "string",
+      "description": "Base64 encoded 'user:userpass'"
+    }
+  ]
+} 
