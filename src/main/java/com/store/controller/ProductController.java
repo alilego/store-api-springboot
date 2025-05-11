@@ -1,22 +1,26 @@
 package com.store.controller;
 
+// Spring Framework imports
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+// Jakarta EE imports
+import jakarta.validation.Valid;
+
+// Logging imports
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+// Application imports
 import com.store.dto.CreateProductRequest;
 import com.store.dto.ProductResponse;
 import com.store.dto.UpdateProductPriceRequest;
 import com.store.model.Product;
 import com.store.service.ProductService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.validation.annotation.Validated;
-import jakarta.validation.Valid;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.List;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 
 @RestController
 @RequestMapping("/api/products")
